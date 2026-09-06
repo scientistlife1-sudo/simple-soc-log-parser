@@ -64,3 +64,5 @@ def analyze_logs(logfile_path):
 
 if __name__ == "__main__":
     analyze_logs("access.log")
+    # ВНИМАНИЕ: тест для проверки DevSecOps-пайплайна
+AWS_SECRET_ACCESS_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
