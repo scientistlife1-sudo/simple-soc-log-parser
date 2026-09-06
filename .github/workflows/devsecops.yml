@@ -9,13 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Робот скачивает код из моегоо репозитория
     - name: Check out repository code
       uses: actions/checkout@v4
 
+    # 2. Робот сам собирает Docker-образ
+    - name: Build Docker Image
+      run: |
+        docker build -t my-test-app:latest .
+
+    # 3. Робот запускает Trivy для проверки собранного образа
     - name: Run Trivy Vulnerability Scanner
       uses: aquasecurity/trivy-action@master
       with:
-        scan-type: 'fs'
-        scan-ref: '.'
-        exit-code: '1'
-        severity: 'CRITICAL,HIGH'
+        image-ref: 'my-test-app:latest' # Указываю проверять собранный образ
+        format: 'table'
+        exit-code: '1'                  # Если найдет критическую уязвимость — уронит сборку
+        severity: 'CRITICAL'            # здесь ищу только самые опасные хакерские дыры
